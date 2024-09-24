@@ -1,0 +1,33 @@
+#fontsize
+font_size 18
+
+# Transaparenza
+# background_opacity 0.65
+
+# Zoom in
+map ctrl+equal increase_font_size
+
+# Zoom out
+map ctrl+minus decrease_font_size
+
+# Copy to the cilpboard
+map ctrl+shift+c copy_to_clipboard
+
+# Paste
+map ctrl+shift+v paste_from_clipboard
+
+#A bit of padding(orizontale, verticale)
+#restart with kitty @ set-colors --reload
+window_padding_width 5
+
+
+
+# BEGIN_KITTY_THEME
+# Monokai Classic
+include current-theme.conf
+# END_KITTY_THEME
+
+#font_family MesloLGS Nerd Font Mono
+#bold_font        auto
+#italic_font      auto
+#bold_italic_font auto
