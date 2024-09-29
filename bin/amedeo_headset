@@ -1,0 +1,7 @@
+#!bin/bash
+
+sudo systemctl start bluetooth
+
+sleep 2
+
+bluetoothctl connect 14:3F:A6:A7:D1:D0
