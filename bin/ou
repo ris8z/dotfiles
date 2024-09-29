@@ -1,0 +1,18 @@
+#!/bin/bash
+
+
+# Directory del vault
+VAULT_DIR="/home/ris8z/file/2brain"
+
+# Naviga nella directory del vault
+cd "$VAULT_DIR"
+
+# Aggiungi tutti i file modificati
+git add .
+
+# Fai un commit con un messaggio generico o dinamico
+git commit -m "automatic updating of vault: $(date)"
+
+# Esegui il push su GitLab
+git push origin main
+
