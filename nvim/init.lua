@@ -15,4 +15,5 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("vim-options")
+require("obsidian-option")
 require("lazy").setup("plugins")

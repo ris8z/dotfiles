@@ -5,3 +5,5 @@ vim.cmd("set shiftwidth=4")
 vim.cmd("set relativenumber")
 vim.g.mapleader = " "
 
+--copy to the system clipboard by default
+vim.opt.clipboard = "unnamedplus"

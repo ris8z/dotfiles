@@ -11,8 +11,6 @@ return {
                 require("none-ls.diagnostics.eslint_d"),
 
                 null_ls.builtins.formatting.black, --for python3
-                null_ls.builtins.diagnostics.mypy,
-                null_ls.builtins.diagnostics.ruff,
 
             },
         })
