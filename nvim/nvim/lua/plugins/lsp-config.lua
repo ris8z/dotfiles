@@ -20,11 +20,9 @@ return {
 					"html",
 					"emmet_ls",
 					"cssls",
-					"jdtls",
-					"hls",
 				},
-			})
-		end,
+            })
+        end,
 	},
 
 	{
@@ -33,14 +31,6 @@ return {
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			local lspconfig = require("lspconfig")
-
-			lspconfig.hls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.jdtls.setup({
-				capabilities = capabilities,
-			})
 
 			lspconfig.lua_ls.setup({
 				capabilities = capabilities,

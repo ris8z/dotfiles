@@ -12,6 +12,6 @@ return {
         })
         vim.cmd.colorscheme("catppuccin-mocha")
         --this line is for transparent background
-        --vim.cmd("highlight normal guibg=none ctermbg=none")
+        --vim.cmd("highlight Normal guibg=NONE ctermbg=NONE")
     end,
 }
