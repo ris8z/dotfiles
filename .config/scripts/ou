@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+VAULT_DIR="/home/esposigg/Documents/projects/2brain"
+
+cd "$VAULT_DIR"
+
+git add .
+
+git commit -m "automatic updating of vault: $(date)"
+
+git push origin main

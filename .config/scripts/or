@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ALL_FILES="/home/esposigg/Documents/projects/2brain/1_inbox/*"
+
+nvim $ALL_FILES -p
