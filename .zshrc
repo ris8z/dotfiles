@@ -52,3 +52,4 @@ export PATH="/home/esposigg/.config/scripts:$PATH"
 alias update-color='wallust run "$(swww query | sed -n "s/.*image: \(.*\)$/\1/p" | head -n1)"'
 alias vim=nvim
 alias vi=nvim
+alias treeb='tree -I ".git" -a . '
