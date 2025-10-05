@@ -53,3 +53,7 @@ alias update-color='wallust run "$(swww query | sed -n "s/.*image: \(.*\)$/\1/p"
 alias vim=nvim
 alias vi=nvim
 alias treeb='tree -I ".git" -a . '
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

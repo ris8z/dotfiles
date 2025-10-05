@@ -99,6 +99,7 @@ vim.lsp.enable(
         "lua_ls",
         "pyright",
         "markdown_oxide",
+        "lemminx", -- used for xml formatter
     }
 )
 
