@@ -50,7 +50,7 @@ vim.pack.add({
 require("mini.pick").setup()
 require("nvim-treesitter.configs").setup(
     {
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "bash" },
+        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "bash", "java" },
         auto_install = true,
         highlight = {
             enable = true,
@@ -99,7 +99,7 @@ vim.lsp.enable(
         "lua_ls",
         "pyright",
         "markdown_oxide",
-        "lemminx", -- used for xml formatter
+        "lemminx",
     }
 )
 
@@ -146,8 +146,58 @@ vim.api.nvim_create_autocmd("User", {
     end,
 })
 
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Go to references" })
+vim.keymap.set("n", "K",  vim.lsp.buf.hover, { desc = "Hover documentation" })
 
 -- Vim cmd
 
 vim.cmd("colorscheme catppuccin")
 vim.cmd(":hi statusline guibg=NONE")
+
+-- java lsp shit
+do
+  local ok, lspconfig = pcall(require, "lspconfig")
+  if ok then
+    local util = require("lspconfig.util")
+
+    -- Avvia jdtls solo per buffer Java
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "java",
+      callback = function()
+        -- root del progetto: gradle, maven o git
+        local root = util.root_pattern("gradlew", "mvnw", "pom.xml", "build.gradle", ".git")(vim.fn.getcwd())
+          or vim.fn.getcwd()
+
+        -- workspace separato per progetto (richiesto da jdtls)
+        local workspace_dir = vim.fn.stdpath("data") .. "/jdtls-workspaces/" .. vim.fn.fnamemodify(root, ":p:h:t")
+        vim.fn.mkdir(workspace_dir, "p")
+
+        -- Percorso jdtls installato da mason (di solito basta 'jdtls' in PATH)
+        local jdtls_cmd = { "jdtls", "--jvm-arg=-Xms256m" }
+
+        lspconfig.jdtls.setup({
+          cmd = jdtls_cmd,
+          root_dir = root,
+          init_options = {
+            workspace = workspace_dir,
+          },
+          settings = {
+            java = {
+              completion = {
+                guessMethodArguments = true,
+                importOrder = { "java", "javax", "com", "org" },
+              },
+              signatureHelp = { enabled = true },
+            },
+          },
+        })
+
+        -- Avvio buffer-local
+        lspconfig.jdtls.launch()
+      end,
+    })
+  end
+end
