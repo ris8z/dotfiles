@@ -118,6 +118,7 @@ vim.lsp.config("lua_ls", { -- Adding vim object to the runtime path of lua LSP
 -- Keymaps
 
 vim.keymap.set("n", "<leader>w", ":write<CR>")
+vim.keymap.set("n", "<leader>e", ":e .<CR>")
 vim.keymap.set("n", "<leader>q", ":quit<CR>")
 vim.keymap.set("n", "<leader>Q", ":qa!<CR>")
 vim.keymap.set("n", "<leader>o", ":update <CR>:source<CR>")
@@ -150,7 +151,7 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
 vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
 vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Go to references" })
-vim.keymap.set("n", "K",  vim.lsp.buf.hover, { desc = "Hover documentation" })
+vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
 
 -- Vim cmd
 
@@ -159,45 +160,71 @@ vim.cmd(":hi statusline guibg=NONE")
 
 -- java lsp shit
 do
-  local ok, lspconfig = pcall(require, "lspconfig")
-  if ok then
-    local util = require("lspconfig.util")
+    local ok, lspconfig = pcall(require, "lspconfig")
+    if ok then
+        local util = require("lspconfig.util")
 
-    -- Avvia jdtls solo per buffer Java
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "java",
-      callback = function()
-        -- root del progetto: gradle, maven o git
-        local root = util.root_pattern("gradlew", "mvnw", "pom.xml", "build.gradle", ".git")(vim.fn.getcwd())
-          or vim.fn.getcwd()
+        -- Avvia jdtls solo per buffer Java
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = "java",
+            callback = function()
+                -- root del progetto: gradle, maven o git
+                local root = util.root_pattern("gradlew", "mvnw", "pom.xml", "build.gradle", ".git")(vim.fn.getcwd())
+                    or vim.fn.getcwd()
 
-        -- workspace separato per progetto (richiesto da jdtls)
-        local workspace_dir = vim.fn.stdpath("data") .. "/jdtls-workspaces/" .. vim.fn.fnamemodify(root, ":p:h:t")
-        vim.fn.mkdir(workspace_dir, "p")
+                -- workspace separato per progetto (richiesto da jdtls)
+                local workspace_dir = vim.fn.stdpath("data") ..
+                "/jdtls-workspaces/" .. vim.fn.fnamemodify(root, ":p:h:t")
+                vim.fn.mkdir(workspace_dir, "p")
 
-        -- Percorso jdtls installato da mason (di solito basta 'jdtls' in PATH)
-        local jdtls_cmd = { "jdtls", "--jvm-arg=-Xms256m" }
+                -- Percorso jdtls installato da mason (di solito basta 'jdtls' in PATH)
+                local jdtls_cmd = { "jdtls", "--jvm-arg=-Xms256m" }
 
-        lspconfig.jdtls.setup({
-          cmd = jdtls_cmd,
-          root_dir = root,
-          init_options = {
-            workspace = workspace_dir,
-          },
-          settings = {
-            java = {
-              completion = {
-                guessMethodArguments = true,
-                importOrder = { "java", "javax", "com", "org" },
-              },
-              signatureHelp = { enabled = true },
-            },
-          },
+                lspconfig.jdtls.setup({
+                    cmd = jdtls_cmd,
+                    root_dir = root,
+                    init_options = {
+                        workspace = workspace_dir,
+                    },
+                    settings = {
+                        java = {
+                            completion = {
+                                guessMethodArguments = true,
+                                importOrder = { "java", "javax", "com", "org" },
+                            },
+                            signatureHelp = { enabled = true },
+                        },
+                    },
+                })
+
+                -- Avvio buffer-local
+                lspconfig.jdtls.launch()
+            end,
         })
-
-        -- Avvio buffer-local
-        lspconfig.jdtls.launch()
-      end,
-    })
-  end
+    end
 end
+
+-- small function to open the selected text on firefox
+function OpenSelectionInFirefox()
+    local _, start_line, start_col, _ = unpack(vim.fn.getpos("'<"))
+    local _, end_line, end_col, _ = unpack(vim.fn.getpos("'>"))
+    local lines = vim.fn.getline(start_line, end_line)
+
+    if #lines == 0 then return end
+    lines[#lines] = string.sub(lines[#lines], 1, end_col)
+    lines[1] = string.sub(lines[1], start_col)
+
+    local selection = table.concat(lines, " ")
+    selection = selection:gsub("^%s*(.-)%s*$", "%1")
+    if selection == "" then return end
+
+    local url = selection
+    if not selection:match("^https?://") then
+        url = "https://www.google.com/search?q=" .. vim.fn.escape(selection, " ")
+    end
+
+    vim.fn.jobstart({ "firefox", url }, { detach = true })
+end
+
+-- Map it to a visual mode shortcut (for example: <leader>f)
+vim.api.nvim_set_keymap('v', '<leader>s', [[:lua OpenSelectionInFirefox()<CR>]], { noremap = true, silent = true })

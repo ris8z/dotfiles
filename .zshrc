@@ -53,6 +53,12 @@ alias update-color='wallust run "$(swww query | sed -n "s/.*image: \(.*\)$/\1/p"
 alias vim=nvim
 alias vi=nvim
 alias treeb='tree -I ".git" -a . '
+alias onem='hyprctl keyword monitor "eDP-1,disable"'
+
+# Node version mangaer
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
