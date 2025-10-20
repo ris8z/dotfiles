@@ -82,7 +82,7 @@ if not vim.g._obsidian_setup_done then
             time_format = "%H:%M",
         },
         attachments = {
-            img_folder = DIR_2BRAIN .. "/5_images",
+            img_folder = "/5_images",
             img_text_func = require("obsidian.builtin").img_text_func,
             img_name_func = function()
                 return string.format("Pasted image %s", os.date "%Y%m%d%H%M%S")
