@@ -3,6 +3,7 @@
 
 export ZSH="$HOME/.oh-my-zsh"
 
+# /home/esposigg/.oh-my-zsh/themes (all themes are here)
 #ZSH_THEME="minimal"
 #ZSH_THEME="mira"
 #ZSH_THEME="mlh" benino
