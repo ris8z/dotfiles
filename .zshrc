@@ -54,7 +54,6 @@ alias update-color='wallust run "$(swww query | sed -n "s/.*image: \(.*\)$/\1/p"
 alias vim=nvim
 alias vi=nvim
 alias treeb='tree -I ".git" -a . '
-alias onem='hyprctl keyword monitor "eDP-1,disable"'
 
 # Node version mangaer
 export NVM_DIR="$HOME/.nvm"
@@ -64,3 +63,9 @@ export NVM_DIR="$HOME/.nvm"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+
+# ANTLR 4.7.1 setup
+export CLASSPATH=".:/usr/local/lib/antlr-4.7.1-complete.jar:$CLASSPATH"
+alias antlr4='java -cp "/usr/local/lib/antlr-4.7.1-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
+alias grun='java -cp "/usr/local/lib/antlr-4.7.1-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'

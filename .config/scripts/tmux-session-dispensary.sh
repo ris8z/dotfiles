@@ -5,6 +5,7 @@ DIRS=(
     "$HOME/Documents/docs"
     "$HOME/Documents/projects"
     "$HOME/Documents/work"
+    "$HOME/Documents/final-year-dcu"
     "$HOME"
 )
 

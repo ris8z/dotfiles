@@ -174,7 +174,7 @@ do
 
                 -- workspace separato per progetto (richiesto da jdtls)
                 local workspace_dir = vim.fn.stdpath("data") ..
-                "/jdtls-workspaces/" .. vim.fn.fnamemodify(root, ":p:h:t")
+                    "/jdtls-workspaces/" .. vim.fn.fnamemodify(root, ":p:h:t")
                 vim.fn.mkdir(workspace_dir, "p")
 
                 -- Percorso jdtls installato da mason (di solito basta 'jdtls' in PATH)
@@ -193,6 +193,11 @@ do
                                 importOrder = { "java", "javax", "com", "org" },
                             },
                             signatureHelp = { enabled = true },
+                            project = {
+                                referencedLibraries = {
+                                    "/usr/local/lib/antlr-4.7.1-complete.jar",
+                                },
+                            },
                         },
                     },
                 })
