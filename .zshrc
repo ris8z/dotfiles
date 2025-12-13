@@ -54,6 +54,9 @@ alias update-color='wallust run "$(swww query | sed -n "s/.*image: \(.*\)$/\1/p"
 alias vim=nvim
 alias vi=nvim
 alias treeb='tree -I ".git" -a . '
+alias onem='hyprctl keyword monitor "eDP-1,disable"'
+alias eyecare='nohup gammastep -O 3200 >/dev/null 2>&1 &'
+alias eyecarestop='pkill gammastep'
 
 # Node version mangaer
 export NVM_DIR="$HOME/.nvm"

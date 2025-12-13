@@ -231,5 +231,4 @@ function OpenSelectionInFirefox()
     vim.fn.jobstart({ "firefox", url }, { detach = true })
 end
 
--- Map it to a visual mode shortcut (for example: <leader>f)
 vim.api.nvim_set_keymap('v', '<leader>s', [[:lua OpenSelectionInFirefox()<CR>]], { noremap = true, silent = true })
