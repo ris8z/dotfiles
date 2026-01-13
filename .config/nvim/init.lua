@@ -57,7 +57,6 @@ require("nvim-treesitter.configs").setup(
             additional_vim_regex_highlighting = false
         }
     }
-
 )
 require("mason").setup()
 require("blink.cmp").setup({
@@ -96,22 +95,10 @@ end
 -- LSPs enable and config
 vim.lsp.enable(
     {
-        "lua_ls",
-        "pyright",
         "markdown_oxide",
         "lemminx",
     }
 )
-
-vim.lsp.config("lua_ls", { -- Adding vim object to the runtime path of lua LSP
-    settings = {
-        Lua = {
-            workspace = {
-                library = vim.api.nvim_get_runtime_file("", true)
-            }
-        }
-    }
-})
 
 -----------------------------------------------------------------
 
@@ -129,8 +116,6 @@ vim.keymap.set({ "n", "v", "x" }, "<leader>d", '"+d')
 vim.keymap.set("n", "<leader>f", ":Pick files<CR>")
 vim.keymap.set("n", "<leader>g", ":Pick grep_live<CR>")
 vim.keymap.set("n", "<leader>h", ":Pick help<CR>")
-
-vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
 
 vim.keymap.set("n", "<leader>oo", ":cd " .. DIR_2BRAIN .. "<CR>")
 vim.api.nvim_create_autocmd("User", {
@@ -157,57 +142,6 @@ vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
 
 vim.cmd("colorscheme catppuccin")
 vim.cmd(":hi statusline guibg=NONE")
-
--- java lsp shit
-do
-    local ok, lspconfig = pcall(require, "lspconfig")
-    if ok then
-        local util = require("lspconfig.util")
-
-        -- Avvia jdtls solo per buffer Java
-        vim.api.nvim_create_autocmd("FileType", {
-            pattern = "java",
-            callback = function()
-                -- root del progetto: gradle, maven o git
-                local root = util.root_pattern("gradlew", "mvnw", "pom.xml", "build.gradle", ".git")(vim.fn.getcwd())
-                    or vim.fn.getcwd()
-
-                -- workspace separato per progetto (richiesto da jdtls)
-                local workspace_dir = vim.fn.stdpath("data") ..
-                    "/jdtls-workspaces/" .. vim.fn.fnamemodify(root, ":p:h:t")
-                vim.fn.mkdir(workspace_dir, "p")
-
-                -- Percorso jdtls installato da mason (di solito basta 'jdtls' in PATH)
-                local jdtls_cmd = { "jdtls", "--jvm-arg=-Xms256m" }
-
-                lspconfig.jdtls.setup({
-                    cmd = jdtls_cmd,
-                    root_dir = root,
-                    init_options = {
-                        workspace = workspace_dir,
-                    },
-                    settings = {
-                        java = {
-                            completion = {
-                                guessMethodArguments = true,
-                                importOrder = { "java", "javax", "com", "org" },
-                            },
-                            signatureHelp = { enabled = true },
-                            project = {
-                                referencedLibraries = {
-                                    "/usr/local/lib/antlr-4.7.1-complete.jar",
-                                },
-                            },
-                        },
-                    },
-                })
-
-                -- Avvio buffer-local
-                lspconfig.jdtls.launch()
-            end,
-        })
-    end
-end
 
 -- small function to open the selected text on firefox
 function OpenSelectionInFirefox()

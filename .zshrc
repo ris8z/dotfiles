@@ -45,6 +45,7 @@ alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
+alias books='cd ~/Documents/books && ls'
 
 # Custom changes 
 export PATH=/home/esposigg/.cargo/bin:$PATH
