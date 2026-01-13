@@ -1,3 +1,5 @@
+vim.loader.enable()
+
 -- Basics
 vim.o.number = true
 vim.o.relativenumber = true
@@ -20,6 +22,10 @@ vim.o.smartcase = true
 vim.o.winborder = "rounded"
 vim.opt.conceallevel = 1
 vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
+vim.o.updatetime = 250      -- Rende l'interfaccia più reattiva (default 4000)
+vim.o.timeoutlen = 300      -- Rende le combo di tasti (leader key) più scattanti
+vim.o.lazyredraw = true     -- Non ridisegna lo schermo durante le macro (più veloce)
+vim.o.ttyfast = true        -- Dice a nvim che hai un terminale veloce
 
 -- Swap and Backup and Undofile
 vim.o.swapfile = false
