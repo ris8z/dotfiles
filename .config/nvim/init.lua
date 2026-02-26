@@ -1,8 +1,6 @@
 vim.loader.enable()
 
 -- Basics
-vim.o.number = true
-vim.o.relativenumber = true
 vim.o.wrap = false
 vim.g.mapleader = " "
 
@@ -13,7 +11,6 @@ vim.o.expandtab = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.softtabstop = 4
-vim.opt.signcolumn = "yes"
 
 -- Quality of life
 vim.o.incsearch = true
@@ -43,6 +40,7 @@ vim.opt.undodir = undodir
 
 -- List of installed Plugins
 vim.pack.add({
+    { src = "https://github.com/rebelot/kanagawa.nvim" },
     { src = "https://github.com/catppuccin/nvim" },
     { src = "https://github.com/nvim-mini/mini.pick" },
     { src = "https://github.com/neovim/nvim-lspconfig" },
@@ -112,6 +110,7 @@ vim.lsp.enable(
 
 vim.keymap.set("n", "<leader>w", ":write<CR>")
 vim.keymap.set("n", "<leader>e", ":e .<CR>")
+vim.keymap.set("n", "<leader>l", ":e!<CR>")
 vim.keymap.set("n", "<leader>q", ":quit<CR>")
 vim.keymap.set("n", "<leader>Q", ":qa!<CR>")
 vim.keymap.set("n", "<leader>o", ":update <CR>:source<CR>")
@@ -145,7 +144,7 @@ vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Go to references" })
 vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
 
 -- Vim cmd
-
+-- vim.cmd("colorscheme kanagawa")
 vim.cmd("colorscheme catppuccin")
 vim.cmd(":hi statusline guibg=NONE")
 

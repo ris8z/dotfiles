@@ -3,6 +3,13 @@
 # you can choose themes from $HOME/.config/kitty/kitty-themes/
 include ./kitty-themes/00-Default.conf
 
+# ---  PERFORMANCE BOOST  ---
+repaint_delay 6
+input_delay 1
+sync_to_monitor no
+enable_audio_bell no
+visual_bell_duration 0.0
+
 font_family FantasqueSansM Nerd Font Mono Bold
 font_size 14.0
 bold_font auto
@@ -13,16 +20,11 @@ background_opacity 0.9
 dynamic_background_opacity 1
 confirm_os_window_close 0
 
-# Animated cursor
-cursor_trail 1
-
-# change to x11 or wayland or leave auto
-linux_display_server auto
+linux_display_server wayland
 
 scrollback_lines 2000
 wheel_scroll_min_lines 1
 
-enable_audio_bell no
 
 # Zoom in
 map ctrl+equal increase_font_size
@@ -39,6 +41,6 @@ window_padding_width 4
 
 
 # BEGIN_KITTY_THEME
-# Catppuccin-Mocha
+# Ghostty Default
 include current-theme.conf
 # END_KITTY_THEME

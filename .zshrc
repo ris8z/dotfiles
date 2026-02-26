@@ -6,8 +6,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # /home/esposigg/.oh-my-zsh/themes (all themes are here)
 #ZSH_THEME="minimal"
 #ZSH_THEME="mira"
-#ZSH_THEME="mlh" benino
-#ZSH_THEME="mortalscumbag"  bello
+#ZSH_THEME="mlh" # benino
+#ZSH_THEME="mortalscumbag"  #bello
 ZSH_THEME="refined" 
 
 plugins=( 
@@ -26,7 +26,7 @@ source $ZSH/oh-my-zsh.sh
 # Display Pokemon-colorscripts
 # Project page: https://gitlab.com/phoneybadger/pokemon-colorscripts#on-other-distros-and-macos
 #pokemon-colorscripts --no-title -s -r #without fastfetch
-pokemon-colorscripts --no-title -s -r | fastfetch -c $HOME/.config/fastfetch/config-pokemon.jsonc --logo-type file-raw --logo-height 10 --logo-width 5 --logo -
+# pokemon-colorscripts --no-title -s -r | fastfetch -c $HOME/.config/fastfetch/config-pokemon.jsonc --logo-type file-raw --logo-height 10 --logo-width 5 --logo -
 
 # fastfetch. Will be disabled if above colorscript was chosen to install
 #fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
@@ -52,8 +52,6 @@ export PATH=/home/esposigg/.cargo/bin:$PATH
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/config"
 export PATH="/home/esposigg/.config/scripts:$PATH"
 alias update-color='wallust run "$(swww query | sed -n "s/.*image: \(.*\)$/\1/p" | head -n1)"'
-alias vim=nvim
-alias vi=nvim
 alias treeb='tree -I ".git" -a . '
 alias onem='hyprctl keyword monitor "eDP-1,disable"'
 alias eyecare='nohup gammastep -O 3200 >/dev/null 2>&1 &'
