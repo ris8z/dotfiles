@@ -49,7 +49,15 @@ vim.opt.undodir = undodir
 -----------------------------------------------------------------
 
 vim.pack.add({
+    -- list of themes
     { src = "https://github.com/catppuccin/nvim" },
+    { src = "https://github.com/folke/tokyonight.nvim" },
+    { src = "https://github.com/rebelot/kanagawa.nvim" },
+    { src = "https://github.com/sainnhe/everforest" },
+    { src = "https://github.com/sainnhe/gruvbox-material" },
+    { src = "https://github.com/EdenEast/nightfox.nvim" },
+    { src = "https://github.com/shaunsingh/nord.nvim" },
+    -- other plugins
     { src = "https://github.com/nvim-mini/mini.pick" },
     { src = "https://github.com/neovim/nvim-lspconfig" },
     { src = "https://github.com/mason-org/mason.nvim" },
@@ -92,11 +100,11 @@ require("blink.cmp").setup({
     fuzzy = { implementation = "lua" }
 })
 
-vim.lsp.enable(
+vim.lsp.enable( -- Before enabling LSPs download them with Mason
     {
         "markdown_oxide",
-        "lemminx",
-        "harper_ls",
+        "lemminx",          -- XML LSP
+        "harper_ls",        -- Grammar checker 
     }
 )
 
@@ -132,17 +140,15 @@ end
 -- keymap: general
 vim.keymap.set("n", "<leader>w", ":write<CR>")
 vim.keymap.set("n", "<leader>e", ":e .<CR>")
-vim.keymap.set("n", "<leader>l", ":e!<CR>")
+vim.keymap.set("n", "<leader>l", ":e!<CR>", { desc = "Load the file change from memory used with Obsidian" })
 vim.keymap.set("n", "<leader>q", ":quit<CR>")
-vim.keymap.set("n", "<leader>Q", ":qa!<CR>")
 vim.keymap.set("n", "<leader>o", ":update <CR>:source<CR>")
-
 vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y')
 vim.keymap.set({ "n", "v", "x" }, "<leader>d", '"+d')
-
 vim.keymap.set("n", "<leader>f", ":Pick files<CR>")
 vim.keymap.set("n", "<leader>g", ":Pick grep_live<CR>")
 vim.keymap.set("n", "<leader>h", ":Pick help<CR>")
+vim.keymap.set("n", "<leader>b", ":Pick buffers<CR>")
 
 -- keymap: Obsidian
 vim.keymap.set("n", "<leader>oo", ":cd " .. DIR_2BRAIN .. "<CR>")
@@ -169,10 +175,33 @@ vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
 vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
 vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { desc = "LSP code actions" })
 
+-- keymap: theme picker
+vim.keymap.set("n", "<leader>t", function()
+    local colors = vim.fn.getcompletion("", "color")
+    vim.ui.select(colors, {
+        prompt = "Select colorscheme: ",
+    }, function(choice)
+        if choice then
+            vim.cmd("colorscheme " .. choice)
+            vim.cmd(":hi statusline guibg=NONE")
+        end
+    end)
+end, { desc = "Pick colorscheme" })
+
 
 -----------------------------------------------------------------
--- Theme
+-- theme
 -----------------------------------------------------------------
 
-vim.cmd("colorscheme catppuccin")
+-- theme: fix the blink piker when we change theme
+vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = function()
+        vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { link = "PmenuSel" })
+    end,
+})
+
+-- theme: set a base theme
+-- vim.cmd("colorscheme catppuccin")
+vim.cmd("colorscheme tokyonight-storm")
 vim.cmd(":hi statusline guibg=NONE")
+
