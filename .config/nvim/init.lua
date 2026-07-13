@@ -140,7 +140,7 @@ end
 -- keymap: general
 vim.keymap.set("n", "<leader>w", ":write<CR>")
 vim.keymap.set("n", "<leader>e", ":e .<CR>")
-vim.keymap.set("n", "<leader>l", ":e!<CR>", { desc = "Load the file change from memory used with Obsidian" })
+vim.keymap.set("n", "<leader>l", ":e!<CR>", { desc = "Load the file change from memory" })
 vim.keymap.set("n", "<leader>q", ":quit<CR>")
 vim.keymap.set("n", "<leader>o", ":update <CR>:source<CR>")
 vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y')
@@ -159,10 +159,18 @@ vim.api.nvim_create_autocmd("User", {
             buffer = ev.buf,
             desc = "Follow link",
         })
-        vim.keymap.set("n", "<leader>on", ":Obsidian template note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>") -- Convert note to template and remove leading whitespace
-        vim.keymap.set("n", "<leader>of", ":s/\\(# \\)[^_]*_/\\1/ | s/-/ /g<cr>")                                     -- Stripe date from title and replace - with space (must have cursor on the title)
-        vim.keymap.set("n", "<leader>ok", ":!mv '%:p' " .. DIR_2BRAIN .. "/4_main<CR>:bd<CR>")                        -- move to main folder
-        vim.keymap.set("n", "<leader>odd", ":!rm '%:p'<CR>:bd<CR>")                                                   -- remove this note
+        vim.keymap.set("n", "<leader>on", ":Obsidian template note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>", {
+            desc = "Convert note to template and remove leading whitespace" 
+        })
+        vim.keymap.set("n", "<leader>of", ":s/\\(# \\)[^_]*_/\\1/ | s/-/ /g<cr>", {
+            desc = "Stripe date from title and replace - with space (must have cursor on the title)" 
+        })
+        vim.keymap.set("n", "<leader>ok", ":!mv '%:p' " .. DIR_2BRAIN .. "/4_main<CR>:bd<CR>", {
+            desc = "move to main folder" 
+        })
+        vim.keymap.set("n", "<leader>odd", ":!rm '%:p'<CR>:bd<CR>", {
+            desc = "remove this note" 
+        })
     end,
 })
 

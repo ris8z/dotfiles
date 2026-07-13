@@ -57,6 +57,10 @@ alias onem='hyprctl keyword monitor "eDP-1,disable"'
 alias eyecare='nohup gammastep -O 3200 >/dev/null 2>&1 &'
 alias eyecarestop='pkill gammastep'
 
+
+
+export MANPAGER="nvim +Man!"
+
 # Node version mangaer
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -71,3 +75,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 export CLASSPATH=".:/usr/local/lib/antlr-4.7.1-complete.jar:$CLASSPATH"
 alias antlr4='java -cp "/usr/local/lib/antlr-4.7.1-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
 alias grun='java -cp "/usr/local/lib/antlr-4.7.1-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/esposigg/.local/bin:$PATH"
